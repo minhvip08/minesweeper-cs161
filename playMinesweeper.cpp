@@ -71,9 +71,20 @@ void playMinesweeper()
 
 	int currentMoveIndex = 0;
 	while (gameOver == false)
-	{
+	{	
+		system("cls");
+		char put;
+
 		printf("Current Status of Board : \n");
 		printBoard(myBoard);
+
+		cout << "If you want to put flag, press P, no press X: ";
+		cin >> put;
+		if (put == 'P'){
+			putFlag(x, y, myBoard);
+			continue;		
+		}
+
 		makeMove(&x, &y);
 
 		// This is to guarantee that the first move is
@@ -118,8 +129,22 @@ bool playMinesweeperUtil(char myBoard[][MAXSIDE], char realBoard[][MAXSIDE],
 		myBoard[row][col] = '*';
 
 		for (i = 0; i < MINES; i++)
-			myBoard[mines[i][0]][mines[i][1]] = '*';
+			{	
 
+				
+				if (myBoard[mines[i][0]][mines[i][1]] == 'P' 
+						&& realBoard[mines[i][0]][mines[i][1]] == '*')
+					continue;
+				myBoard[mines[i][0]][mines[i][1]] = '*';
+			}
+			
+		for (int i=0; i < 8; i++){
+			for (int j=0; j <8; j++){
+					if (myBoard[i][j] == 'P' 
+						&& realBoard[i][j] != '*')
+					myBoard[i][j] = 'X';
+			}
+		}
 		printBoard(myBoard);
 		printf("\nYou lost!\n");
 		return (true);
@@ -133,6 +158,7 @@ bool playMinesweeperUtil(char myBoard[][MAXSIDE], char realBoard[][MAXSIDE],
 		(*movesLeft)--;
 
 		myBoard[row][col] = count + '0';
+		realBoard[row][col] = myBoard[row][col];
 
 		if (!count)
 		{

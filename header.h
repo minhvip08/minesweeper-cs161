@@ -3,6 +3,8 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<cstring>
+#include<windows.h>
+#include"console.h"
 using namespace std;
 
 //Define level
@@ -20,7 +22,7 @@ extern int SIDE;
 extern int MINE;
 
 
-
+void putFlag(int x , int y, char myBoard[][MAXSIDE]);
 // A Utility Function to check whether given cell (row, col)
 // is a valid cell or not
 bool isValid(int row, int col);

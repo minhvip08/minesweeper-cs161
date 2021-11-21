@@ -22,6 +22,15 @@ bool isMine(int row, int col, char board[][MAXSIDE])
 }
 
 
+void putFlag (int x, int y, char myBoard[][MAXSIDE]){
+	makeMove(&x, &y);
+	if (myBoard[x][y] == 'P')
+		myBoard[x][y] = '-';
+	else myBoard[x][y] = 'P';
+	printBoard(myBoard);
+	return;
+}
+
 // A Function to get the user's move
 void makeMove(int* x, int* y)
 {
@@ -37,17 +46,20 @@ void printBoard(char myBoard[][MAXSIDE])
 {
 	int i, j;
 
-	printf(" ");
+	printf("  ");
+
+	for (i = 0; i < SIDE; i++){
+		setColor(12);
+		printf("%d ", i);
+	}
+
+
+	printf("\n");
 
 	for (i = 0; i < SIDE; i++)
+	{	setColor(12);
 		printf("%d ", i);
-
-	printf("\n\n");
-
-	for (i = 0; i < SIDE; i++)
-	{
-		printf("%d ", i);
-
+		setColor(7);
 		for (j = 0; j < SIDE; j++)
 			printf("%c ", myBoard[i][j]);
 		printf("\n");

@@ -11,6 +11,7 @@ read instruction.txt
 #include"header.h"
 #include"playMinesweeper.cpp"
 #include"implement.cpp"
+#include"console.cpp"
 
 int main()
 {
