@@ -6,9 +6,9 @@
 using namespace std;
 
 //Define level
-#define EASY 0
-#define NORMAL 1
-#define HARD 2
+#define BEGINNER 0
+#define INTERMEDIATE 1
+#define ADVANCED 2
 
 //Define size of game
 #define MAXSIDE 25
@@ -37,15 +37,16 @@ void printBoard(char myBoard[][MAXSIDE]);
 
 // A Function to count the number of
 // mines in the adjacent cells
-int countMinesAround(int row, int col, int mine[][2], char realBoard[][MAXSIDE]);
+int countAdjacentMines(int row, int col, int mines[][2],
+	char realBoard[][MAXSIDE]);
 
 // A Recursive Function to play the Minesweeper Game
-bool playMinesweeperUtil(char myBoard[][MAXSIDE], char realBoard[][MAXSIDE], 
-    int mine[][2], int row, int col, int* movesLeft);
+bool playMinesweeperUtil(char myBoard[][MAXSIDE], char realBoard[][MAXSIDE],
+	int mines[][2], int row, int col, int* movesLeft);
 
 // A Function to place the mines randomly
 // on the board
-void placeMines(int mine[][2], char realBoard[][MAXSIDE]);
+void placeMines(int mines[][2], char realBoard[][MAXSIDE]);
 
 // A Function to initialise the game
 void initialise(char realBoard[][MAXSIDE], char myBoard[][MAXSIDE]);

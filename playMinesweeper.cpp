@@ -7,33 +7,33 @@ int MINES; // number of mines on the board
 void chooseDifficultyLevel()
 {
 	/*
-	--> EASY = 9 * 9 Cells and 10 Mines
-	--> NORMAL = 16 * 16 Cells and 40 Mines
-	--> HARD = 24 * 24 Cells and 99 Mines
+	--> BEGINNER = 9 * 9 Cells and 10 Mines
+	--> INTERMEDIATE = 16 * 16 Cells and 40 Mines
+	--> ADVANCED = 24 * 24 Cells and 99 Mines
 	*/
 
 	int level;
 
-	cout << "Enter the Difficulty Level\n";
-	cout << "Press 0 for EASY (9 * 9 Cells and 10 Mines)\n";
-	cout << "Press 1 for NORMAL (16 * 16 Cells and 40 Mines)\n";
-	cout << "Press 2 for HARD (24 * 24 Cells and 99 Mines)\n";
+	printf("Enter the Difficulty Level\n");
+	printf("Press 0 for BEGINNER (9 * 9 Cells and 10 Mines)\n");
+	printf("Press 1 for INTERMEDIATE (16 * 16 Cells and 40 Mines)\n");
+	printf("Press 2 for ADVANCED (24 * 24 Cells and 99 Mines)\n");
 
-	cin >> level;
+	scanf("%d", &level);
 
-	if (level == EASY)
+	if (level == BEGINNER)
 	{
 		SIDE = 9;
 		MINES = 10;
 	}
 
-	if (level == NORMAL)
+	if (level == INTERMEDIATE)
 	{
 		SIDE = 16;
 		MINES = 40;
 	}
 
-	if (level == HARD)
+	if (level == ADVANCED)
 	{
 		SIDE = 24;
 		MINES = 99;
@@ -59,10 +59,10 @@ void playMinesweeper()
 	placeMines(mines, realBoard);
 
 	/*
-	If you want to know more about all of the mines in this game 
-	and cheat, following these step:
-	1: Include cheat.h and cheat.cpp in main.cpp
-	2: Uncomment sentence bellow:
+	If you want to cheat and know
+	where mines are before playing the game
+	then uncomment this part
+
 	cheatMinesweeper(realBoard);
 	*/
 
@@ -72,7 +72,7 @@ void playMinesweeper()
 	int currentMoveIndex = 0;
 	while (gameOver == false)
 	{
-		cout << "Current Status of Board : \n";
+		printf("Current Status of Board : \n");
 		printBoard(myBoard);
 		makeMove(&x, &y);
 
@@ -93,7 +93,7 @@ void playMinesweeper()
 
 		if ((gameOver == false) && (movesLeft == 0))
 		{
-			cout << "\nYou won !\n";
+			printf("\nYou won !\n");
 			gameOver = true;
 		}
 	}
@@ -102,7 +102,7 @@ void playMinesweeper()
 
 // A Recursive Function to play the Minesweeper Game
 bool playMinesweeperUtil(char myBoard[][MAXSIDE], char realBoard[][MAXSIDE],
-	int mine[][2], int row, int col, int* movesLeft)
+	int mines[][2], int row, int col, int* movesLeft)
 {
 
 	// Base Case of Recursion
@@ -118,10 +118,10 @@ bool playMinesweeperUtil(char myBoard[][MAXSIDE], char realBoard[][MAXSIDE],
 		myBoard[row][col] = '*';
 
 		for (i = 0; i < MINES; i++)
-			myBoard[mine[i][0]][mine[i][1]] = '*';
+			myBoard[mines[i][0]][mines[i][1]] = '*';
 
 		printBoard(myBoard);
-		cout << "\nYou lost!\n";
+		printf("\nYou lost!\n");
 		return (true);
 	}
 
@@ -129,7 +129,7 @@ bool playMinesweeperUtil(char myBoard[][MAXSIDE], char realBoard[][MAXSIDE],
 	{
 		// Calculate the number of adjacent mines and put it
 		// on the board
-		int count = countMinesAround(row, col, mine, realBoard);
+		int count = countAdjacentMines(row, col, mines, realBoard);
 		(*movesLeft)--;
 
 		myBoard[row][col] = count + '0';
@@ -164,7 +164,7 @@ bool playMinesweeperUtil(char myBoard[][MAXSIDE], char realBoard[][MAXSIDE],
 			if (isValid(row - 1, col) == true)
 			{
 				if (isMine(row - 1, col, realBoard) == false)
-					playMinesweeperUtil(myBoard, realBoard, mine, row - 1, col, movesLeft);
+					playMinesweeperUtil(myBoard, realBoard, mines, row - 1, col, movesLeft);
 			}
 
 			//----------- 2nd Neighbour (South) ------------
@@ -173,7 +173,7 @@ bool playMinesweeperUtil(char myBoard[][MAXSIDE], char realBoard[][MAXSIDE],
 			if (isValid(row + 1, col) == true)
 			{
 				if (isMine(row + 1, col, realBoard) == false)
-					playMinesweeperUtil(myBoard, realBoard, mine, row + 1, col, movesLeft);
+					playMinesweeperUtil(myBoard, realBoard, mines, row + 1, col, movesLeft);
 			}
 
 			//----------- 3rd Neighbour (East) ------------
@@ -182,7 +182,7 @@ bool playMinesweeperUtil(char myBoard[][MAXSIDE], char realBoard[][MAXSIDE],
 			if (isValid(row, col + 1) == true)
 			{
 				if (isMine(row, col + 1, realBoard) == false)
-					playMinesweeperUtil(myBoard, realBoard, mine, row, col + 1, movesLeft);
+					playMinesweeperUtil(myBoard, realBoard, mines, row, col + 1, movesLeft);
 			}
 
 			//----------- 4th Neighbour (West) ------------
@@ -191,7 +191,7 @@ bool playMinesweeperUtil(char myBoard[][MAXSIDE], char realBoard[][MAXSIDE],
 			if (isValid(row, col - 1) == true)
 			{
 				if (isMine(row, col - 1, realBoard) == false)
-					playMinesweeperUtil(myBoard, realBoard, mine, row, col - 1, movesLeft);
+					playMinesweeperUtil(myBoard, realBoard, mines, row, col - 1, movesLeft);
 			}
 
 			//----------- 5th Neighbour (North-East) ------------
@@ -200,7 +200,7 @@ bool playMinesweeperUtil(char myBoard[][MAXSIDE], char realBoard[][MAXSIDE],
 			if (isValid(row - 1, col + 1) == true)
 			{
 				if (isMine(row - 1, col + 1, realBoard) == false)
-					playMinesweeperUtil(myBoard, realBoard, mine, row - 1, col + 1, movesLeft);
+					playMinesweeperUtil(myBoard, realBoard, mines, row - 1, col + 1, movesLeft);
 			}
 
 			//----------- 6th Neighbour (North-West) ------------
@@ -209,7 +209,7 @@ bool playMinesweeperUtil(char myBoard[][MAXSIDE], char realBoard[][MAXSIDE],
 			if (isValid(row - 1, col - 1) == true)
 			{
 				if (isMine(row - 1, col - 1, realBoard) == false)
-					playMinesweeperUtil(myBoard, realBoard, mine, row - 1, col - 1, movesLeft);
+					playMinesweeperUtil(myBoard, realBoard, mines, row - 1, col - 1, movesLeft);
 			}
 
 			//----------- 7th Neighbour (South-East) ------------
@@ -218,7 +218,7 @@ bool playMinesweeperUtil(char myBoard[][MAXSIDE], char realBoard[][MAXSIDE],
 			if (isValid(row + 1, col + 1) == true)
 			{
 				if (isMine(row + 1, col + 1, realBoard) == false)
-					playMinesweeperUtil(myBoard, realBoard, mine, row + 1, col + 1, movesLeft);
+					playMinesweeperUtil(myBoard, realBoard, mines, row + 1, col + 1, movesLeft);
 			}
 
 			//----------- 8th Neighbour (South-West) ------------
@@ -227,7 +227,7 @@ bool playMinesweeperUtil(char myBoard[][MAXSIDE], char realBoard[][MAXSIDE],
 			if (isValid(row + 1, col - 1) == true)
 			{
 				if (isMine(row + 1, col - 1, realBoard) == false)
-					playMinesweeperUtil(myBoard, realBoard, mine, row + 1, col - 1, movesLeft);
+					playMinesweeperUtil(myBoard, realBoard, mines, row + 1, col - 1, movesLeft);
 			}
 		}
 

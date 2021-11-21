@@ -14,7 +14,11 @@ read instruction.txt
 
 int main()
 {
-
+	/* Choose a level between
+	--> BEGINNER = 9 * 9 Cells and 10 Mines
+	--> INTERMEDIATE = 16 * 16 Cells and 40 Mines
+	--> ADVANCED = 24 * 24 Cells and 99 Mines
+	*/
 	chooseDifficultyLevel();
 
 	playMinesweeper();

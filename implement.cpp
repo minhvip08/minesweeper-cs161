@@ -21,41 +21,43 @@ bool isMine(int row, int col, char board[][MAXSIDE])
 		return (false);
 }
 
+
 // A Function to get the user's move
 void makeMove(int* x, int* y)
 {
 	// Take the input move
-	cout << "Enter your move, (row, column) -> ";
-	cin >> *x >> *y;
+	printf("Enter your move, (row, column) -> ");
+	scanf("%d %d", x, y);
 	return;
 }
+
 
 // A Function to print the current gameplay board
 void printBoard(char myBoard[][MAXSIDE])
 {
 	int i, j;
 
-	cout << " ";
+	printf(" ");
 
 	for (i = 0; i < SIDE; i++)
-		cout << i;
+		printf("%d ", i);
 
-	cout << "\n\n";
+	printf("\n\n");
 
 	for (i = 0; i < SIDE; i++)
 	{
-		cout << i;
+		printf("%d ", i);
 
 		for (j = 0; j < SIDE; j++)
-			cout << "%c ", myBoard[i][j];
-		cout << '\n';
+			printf("%c ", myBoard[i][j]);
+		printf("\n");
 	}
 	return;
 }
 
 // A Function to count the number of
 // mines in the adjacent cells
-int countMinesAround(int row, int col, int mines[][2],
+int countAdjacentMines(int row, int col, int mines[][2],
 	char realBoard[][MAXSIDE])
 {
 
@@ -160,8 +162,6 @@ int countMinesAround(int row, int col, int mines[][2],
 	return (count);
 }
 
-
-
 // A Function to place the mines randomly
 // on the board
 void placeMines(int mines[][2], char realBoard[][MAXSIDE])
@@ -196,25 +196,6 @@ void placeMines(int mines[][2], char realBoard[][MAXSIDE])
 	return;
 }
 
-// A Function to initialise the game
-void initialise(char realBoard[][MAXSIDE], char myBoard[][MAXSIDE])
-{
-	// Initiate the random number generator so that
-	// the same configuration doesn't arises
-	srand(time(NULL));
-
-	// Assign all the cells as mine-free
-	for (int i = 0; i < SIDE; i++)
-	{
-		for (int j = 0; j < SIDE; j++)
-		{
-			myBoard[i][j] = realBoard[i][j] = '-';
-		}
-	}
-
-	return;
-}
-
 
 // A function to replace the mine from (row, col) and put
 // it to a vacant space
@@ -238,3 +219,20 @@ void replaceMine(int row, int col, char board[][MAXSIDE])
 	return;
 }
 
+void initialise(char realBoard[][MAXSIDE], char myBoard[][MAXSIDE])
+{
+	// Initiate the random number generator so that
+	// the same configuration doesn't arises
+	srand(time(NULL));
+
+	// Assign all the cells as mine-free
+	for (int i = 0; i < SIDE; i++)
+	{
+		for (int j = 0; j < SIDE; j++)
+		{
+			myBoard[i][j] = realBoard[i][j] = '-';
+		}
+	}
+
+	return;
+}
